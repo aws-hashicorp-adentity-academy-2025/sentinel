@@ -33,6 +33,7 @@ policy_statements = func() {
     return statements
 }
 
+# 허용하지 않는 action이 있습니다. 확인하세요.
 valid_statement = func(s,a) {
     if s.Action contains a {
       return false
