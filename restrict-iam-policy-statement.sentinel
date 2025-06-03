@@ -11,9 +11,16 @@ forbidden_actions = [
   "s3:DeleteObject",
 ]
 
-# get all IAM policy resources from the tfplan
 all_policy_resources = func() {
     policies = []
+
+    # 루트 모듈의 aws_iam_policy
+    root_resources = values(tfplan.resources.aws_iam_policy) else []
+    for root_resources as _, r {
+        policies += values(r)
+    }
+
+    # 서브 모듈의 aws_iam_policy
     for tfplan.module_paths as path {
         resources = values(tfplan.module(path).resources.aws_iam_policy) else []
         for resources as _, r {
@@ -36,7 +43,8 @@ policy_statements = func() {
 # 허용하지 않는 action이 있습니다. 확인하세요.
 valid_statement = func(s,a) {
     if s.Action contains a {
-      return false
+        print("허용되지 않는 action 발견: action=", a, ", statement=", s)   
+        return false
     }
   return true
 }
