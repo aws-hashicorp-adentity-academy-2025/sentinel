@@ -40,7 +40,6 @@ policy_statements = func() {
     return statements
 }
 
-# 허용하지 않는 action이 있습니다. 확인하세요.
 valid_statement = func(s,a) {
     if s.Action contains a {
         print("허용되지 않는 action 발견: action=", a, ", statement=", s)   
@@ -49,7 +48,7 @@ valid_statement = func(s,a) {
   return true
 }
  
-# Main rule that requires other rules to be true
+# 허용하지 않는 action이 있습니다. 확인하세요.
 main = rule {
     all policy_statements() as s {
         all forbidden_actions as a {
